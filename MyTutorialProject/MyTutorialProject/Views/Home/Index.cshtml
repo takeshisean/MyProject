@@ -1,10 +1,20 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
+<style>
+    input, select, textarea{
+        max-width: 500px;
+    }
+</style>
 <div ng-controller="myAssignmentController">
-    <p><input type="text" style="width:360px; height: 30px;" ng-model="myLunch"/></p>
-    <input type="button" value="Check If Too Much" ng-click="checkMyLunch($event, myLunch)" />
+    <p><input type="text" 
+              style="width:500px; height: 30px;" 
+              placeholder="List comma separated dishes you usually have for lunch" 
+              ng-model="myLunch"/>
+    </p>
+    <p>* Input do NOT consider and empty item</p>
+    <p><input type="button" value="Check If Too Much" ng-click="checkMyLunch($event, myLunch)" /></p>
+    <label>{{myResult}}</label>
 </div>
 
 <script>
@@ -22,20 +32,20 @@
                     let lunchCount = 0;
 
                     for (let i = 0; i < arrayOfLunch.length; i++) {
-                        if (arrayOfLunch[i]) {
+                        if (arrayOfLunch[i].trim()) {
                             lunchCount++;
                         }
                     }
 
                     if (lunchCount === 0) {
-                        alert("Please enter data first");
+                        $scope.myResult = "Please enter data first";
                     }else if (lunchCount <= 3) {
-                        alert("Enjoy!");
+                        $scope.myResult = "Enjoy!";
                     } else {
-                        alert("Too much!");
+                        $scope.myResult = "Too much!";
                     }
                 } else {
-                    alert("Please enter data first");
+                    $scope.myResult = "Please enter data first";
                 }
             }
         }])
